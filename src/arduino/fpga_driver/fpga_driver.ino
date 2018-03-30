@@ -1,3 +1,9 @@
+// Pinos utilizados para entrada no arduino
+const int input[] = {
+    2, 3, 4, 5, 6, 7, 8, 9
+};
+
+// Pinos utilizados para saida no arduino
 const int output[] = {
     22, 24, 26, 28, 30, 32, 34, 36
 };
@@ -5,6 +11,7 @@ const int output[] = {
 void setup() {
     // Inicializa as saidas para o fpga
     for (int i = 0; i < 8; i++) {
+        pinMode(input[i], INPUT);
         pinMode(output[i], OUTPUT);
     }
     
