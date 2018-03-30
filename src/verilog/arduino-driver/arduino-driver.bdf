@@ -24,7 +24,7 @@ agreement for further details.
 	(input)
 	(rect 40 192 232 208)
 	(text "INPUT" (rect 149 0 190 11)(font "Arial" (font_size 6)))
-	(text "read_clock" (rect 5 0 100 12)(font "Arial" ))
+	(text "read_clock" (rect 5 0 99 12)(font "Arial" ))
 	(pt 192 8)
 	(drawing
 		(line (pt 108 12)(pt 133 12))
@@ -35,12 +35,13 @@ agreement for further details.
 		(line (pt 133 12)(pt 137 8))
 	)
 	(text "VCC" (rect 152 7 176 18)(font "Arial" (font_size 6)))
+	(annotation_block (location)(rect -32 208 40 240))
 )
 (pin
 	(input)
 	(rect 32 224 232 240)
 	(text "INPUT" (rect 157 0 198 11)(font "Arial" (font_size 6)))
-	(text "write_clock" (rect 5 0 109 12)(font "Liberation Sans" ))
+	(text "write_clock" (rect 5 0 108 12)(font "Liberation Sans" ))
 	(pt 200 8)
 	(drawing
 		(line (pt 116 12)(pt 141 12))
@@ -51,28 +52,13 @@ agreement for further details.
 		(line (pt 141 12)(pt 145 8))
 	)
 	(text "VCC" (rect 160 7 184 18)(font "Arial" (font_size 6)))
-)
-(pin
-	(input)
-	(rect -32 248 232 264)
-	(text "INPUT" (rect 221 0 262 11)(font "Arial" (font_size 6)))
-	(text "flag_write_arduino" (rect 5 0 175 12)(font "Liberation Sans" ))
-	(pt 264 8)
-	(drawing
-		(line (pt 180 12)(pt 205 12))
-		(line (pt 180 4)(pt 205 4))
-		(line (pt 209 8)(pt 264 8))
-		(line (pt 180 12)(pt 180 4))
-		(line (pt 205 4)(pt 209 8))
-		(line (pt 205 12)(pt 209 8))
-	)
-	(text "VCC" (rect 224 7 248 18)(font "Arial" (font_size 6)))
+	(annotation_block (location)(rect -48 240 32 272))
 )
 (pin
 	(input)
 	(rect -32 280 232 296)
 	(text "INPUT" (rect 221 0 262 11)(font "Arial" (font_size 6)))
-	(text "system_input[3..0]" (rect 5 0 175 12)(font "Liberation Sans" ))
+	(text "system_input[3..0]" (rect 5 0 174 12)(font "Liberation Sans" ))
 	(pt 264 8)
 	(drawing
 		(line (pt 180 12)(pt 205 12))
@@ -83,12 +69,13 @@ agreement for further details.
 		(line (pt 205 12)(pt 209 8))
 	)
 	(text "VCC" (rect 224 7 248 18)(font "Arial" (font_size 6)))
+	(annotation_block (location)(rect -120 296 -32 328))
 )
 (pin
 	(input)
 	(rect -32 312 232 328)
 	(text "INPUT" (rect 221 0 262 11)(font "Arial" (font_size 6)))
-	(text "module_input[3..0]" (rect 5 0 175 12)(font "Arial" ))
+	(text "module_input[3..0]" (rect 5 0 174 12)(font "Arial" ))
 	(pt 264 8)
 	(drawing
 		(line (pt 180 12)(pt 205 12))
@@ -115,6 +102,7 @@ agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
+	(annotation_block (location)(rect 1108 240 1188 272))
 )
 (pin
 	(output)
@@ -200,6 +188,21 @@ agreement for further details.
 	)
 	(annotation_block (parameter)(rect 728 104 1016 168))
 )
+(symbol
+	(rect 152 240 184 256)
+	(text "VCC" (rect 7 0 31 11)(font "Arial" (font_size 6)))
+	(text "inst" (rect 3 5 40 17)(font "Arial" )(invisible))
+	(port
+		(pt 16 16)
+		(output)
+		(text "1" (rect 19 7 26 19)(font "Courier New" (bold))(invisible))
+		(text "1" (rect 19 7 26 19)(font "Courier New" (bold))(invisible))
+		(line (pt 16 16)(pt 16 8))
+	)
+	(drawing
+		(line (pt 8 8)(pt 24 8))
+	)
+)
 (connector
 	(pt 328 264)
 	(pt 312 264)
@@ -233,14 +236,6 @@ agreement for further details.
 (connector
 	(pt 328 232)
 	(pt 280 232)
-)
-(connector
-	(pt 280 232)
-	(pt 280 256)
-)
-(connector
-	(pt 280 256)
-	(pt 232 256)
 )
 (connector
 	(pt 328 216)
@@ -277,4 +272,16 @@ agreement for further details.
 	(pt 784 232)
 	(pt 824 232)
 	(bus)
+)
+(connector
+	(pt 280 264)
+	(pt 280 232)
+)
+(connector
+	(pt 280 264)
+	(pt 168 264)
+)
+(connector
+	(pt 168 264)
+	(pt 168 256)
 )
