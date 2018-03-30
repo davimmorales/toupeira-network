@@ -1,0 +1,280 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 1991-2015 Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Altera and sold by Altera or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+*/
+(header "graphic" (version "1.4"))
+(pin
+	(input)
+	(rect 40 192 232 208)
+	(text "INPUT" (rect 149 0 190 11)(font "Arial" (font_size 6)))
+	(text "read_clock" (rect 5 0 100 12)(font "Arial" ))
+	(pt 192 8)
+	(drawing
+		(line (pt 108 12)(pt 133 12))
+		(line (pt 108 4)(pt 133 4))
+		(line (pt 137 8)(pt 192 8))
+		(line (pt 108 12)(pt 108 4))
+		(line (pt 133 4)(pt 137 8))
+		(line (pt 133 12)(pt 137 8))
+	)
+	(text "VCC" (rect 152 7 176 18)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect 32 224 232 240)
+	(text "INPUT" (rect 157 0 198 11)(font "Arial" (font_size 6)))
+	(text "write_clock" (rect 5 0 109 12)(font "Liberation Sans" ))
+	(pt 200 8)
+	(drawing
+		(line (pt 116 12)(pt 141 12))
+		(line (pt 116 4)(pt 141 4))
+		(line (pt 145 8)(pt 200 8))
+		(line (pt 116 12)(pt 116 4))
+		(line (pt 141 4)(pt 145 8))
+		(line (pt 141 12)(pt 145 8))
+	)
+	(text "VCC" (rect 160 7 184 18)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect -32 248 232 264)
+	(text "INPUT" (rect 221 0 262 11)(font "Arial" (font_size 6)))
+	(text "flag_write_arduino" (rect 5 0 175 12)(font "Liberation Sans" ))
+	(pt 264 8)
+	(drawing
+		(line (pt 180 12)(pt 205 12))
+		(line (pt 180 4)(pt 205 4))
+		(line (pt 209 8)(pt 264 8))
+		(line (pt 180 12)(pt 180 4))
+		(line (pt 205 4)(pt 209 8))
+		(line (pt 205 12)(pt 209 8))
+	)
+	(text "VCC" (rect 224 7 248 18)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect -32 280 232 296)
+	(text "INPUT" (rect 221 0 262 11)(font "Arial" (font_size 6)))
+	(text "system_input[3..0]" (rect 5 0 175 12)(font "Liberation Sans" ))
+	(pt 264 8)
+	(drawing
+		(line (pt 180 12)(pt 205 12))
+		(line (pt 180 4)(pt 205 4))
+		(line (pt 209 8)(pt 264 8))
+		(line (pt 180 12)(pt 180 4))
+		(line (pt 205 4)(pt 209 8))
+		(line (pt 205 12)(pt 209 8))
+	)
+	(text "VCC" (rect 224 7 248 18)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect -32 312 232 328)
+	(text "INPUT" (rect 221 0 262 11)(font "Arial" (font_size 6)))
+	(text "module_input[3..0]" (rect 5 0 175 12)(font "Arial" ))
+	(pt 264 8)
+	(drawing
+		(line (pt 180 12)(pt 205 12))
+		(line (pt 180 4)(pt 205 4))
+		(line (pt 209 8)(pt 264 8))
+		(line (pt 180 12)(pt 180 4))
+		(line (pt 205 4)(pt 209 8))
+		(line (pt 205 12)(pt 209 8))
+	)
+	(text "VCC" (rect 224 7 248 18)(font "Arial" (font_size 6)))
+)
+(pin
+	(output)
+	(rect 824 224 1108 240)
+	(text "OUTPUT" (rect 1 0 50 11)(font "Arial" (font_size 6)))
+	(text "module_output[31..0]" (rect 90 0 278 12)(font "Liberation Sans" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(pin
+	(output)
+	(rect 824 192 1099 208)
+	(text "OUTPUT" (rect 1 0 50 11)(font "Arial" (font_size 6)))
+	(text "system_output[3..0]" (rect 90 0 269 12)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(symbol
+	(rect 328 168 728 312)
+	(text "arduino_driver" (rect 5 0 137 12)(font "Arial" ))
+	(text "inst2" (rect 8 128 55 140)(font "Liberation Sans" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "read_clock" (rect 0 0 94 12)(font "Arial" ))
+		(text "read_clock" (rect 21 27 115 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "write_clock" (rect 0 0 103 12)(font "Arial" ))
+		(text "write_clock" (rect 21 43 124 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "flag_write_arduino" (rect 0 0 169 12)(font "Arial" ))
+		(text "flag_write_arduino" (rect 21 59 190 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "system_input[BYTE_LENGTH-1..0]" (rect 0 0 283 12)(font "Arial" ))
+		(text "system_input[BYTE_LENGTH-1..0]" (rect 21 75 304 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 3))
+	)
+	(port
+		(pt 0 96)
+		(input)
+		(text "module_input[BYTE_LENGTH-1..0]" (rect 0 0 283 12)(font "Arial" ))
+		(text "module_input[BYTE_LENGTH-1..0]" (rect 21 91 304 103)(font "Arial" ))
+		(line (pt 0 96)(pt 16 96)(line_width 3))
+	)
+	(port
+		(pt 400 32)
+		(output)
+		(text "system_output[BYTE_LENGTH-1..0]" (rect 0 0 292 12)(font "Arial" ))
+		(text "system_output[BYTE_LENGTH-1..0]" (rect 132 27 424 39)(font "Arial" ))
+		(line (pt 400 32)(pt 384 32)(line_width 3))
+	)
+	(port
+		(pt 400 48)
+		(output)
+		(text "module_output[DATA_LENGTH-1..0]" (rect 0 0 292 12)(font "Arial" ))
+		(text "module_output[DATA_LENGTH-1..0]" (rect 132 43 424 55)(font "Arial" ))
+		(line (pt 400 48)(pt 384 48)(line_width 3))
+	)
+	(parameter
+		"BYTE_LENGTH"
+		"4"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"DATA_LENGTH"
+		"32"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(drawing
+		(rectangle (rect 16 16 384 128))
+	)
+	(annotation_block (parameter)(rect 728 104 1016 168))
+)
+(connector
+	(pt 328 264)
+	(pt 312 264)
+	(bus)
+)
+(connector
+	(pt 312 264)
+	(pt 312 320)
+	(bus)
+)
+(connector
+	(pt 312 320)
+	(pt 232 320)
+	(bus)
+)
+(connector
+	(pt 328 248)
+	(pt 296 248)
+	(bus)
+)
+(connector
+	(pt 296 248)
+	(pt 296 288)
+	(bus)
+)
+(connector
+	(pt 296 288)
+	(pt 232 288)
+	(bus)
+)
+(connector
+	(pt 328 232)
+	(pt 280 232)
+)
+(connector
+	(pt 280 232)
+	(pt 280 256)
+)
+(connector
+	(pt 280 256)
+	(pt 232 256)
+)
+(connector
+	(pt 328 216)
+	(pt 256 216)
+)
+(connector
+	(pt 256 216)
+	(pt 256 232)
+)
+(connector
+	(pt 256 232)
+	(pt 232 232)
+)
+(connector
+	(pt 328 200)
+	(pt 232 200)
+)
+(connector
+	(pt 728 200)
+	(pt 824 200)
+	(bus)
+)
+(connector
+	(pt 728 216)
+	(pt 784 216)
+	(bus)
+)
+(connector
+	(pt 784 216)
+	(pt 784 232)
+	(bus)
+)
+(connector
+	(pt 784 232)
+	(pt 824 232)
+	(bus)
+)
