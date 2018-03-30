@@ -8,6 +8,9 @@ const int output[] = {
     22, 24, 26, 28, 30, 32, 34, 36
 };
 
+int states[8];
+int state = 0;
+
 void setup() {
     // Inicializa as saidas para o fpga
     for (int i = 0; i < 8; i++) {
@@ -20,6 +23,11 @@ void setup() {
 }
 
 void loop() {
+    //toFPGA();
+    fromFPGA();
+}
+
+void toFPGA() {
     if (Serial.available() > 0) {
         int inByte = Serial.read();
        
@@ -55,4 +63,11 @@ void loop() {
                 }
         }
     }
-} 
+}
+
+void fromFPGA() {
+    for (int i = 0; i < 4; i++) {
+        Serial.print(digitalRead(input[i]) == HIGH ? '1' : '0');
+    }
+    Serial.println();
+}
