@@ -20,7 +20,7 @@ void setup() {
 
     // Inicializa a comunicaçao serial
     Serial.begin(9600);
-    analogReference(INTERNAL2V56);
+    analogReference(INTERNAL1V1);
 }
 
 void loop() {
@@ -67,7 +67,7 @@ void toFPGA() {
 }
 
 void fromFPGA() {
-    for (int i = 0; i < 4; i++) {
+    for (int i = 7; i >= 0; i--) {
         Serial.print(analogRead(input[i]) > 1000 ? '1' : '0');
     }
     Serial.println();
