@@ -1,11 +1,11 @@
 // Pinos utilizados para entrada no arduino
 const int input[] = {
-    2, 3, 4, 5, 6, 7, 8, 9
+    8, 9, 10, 11, 12, 13, 14, 15
 };
 
 // Pinos utilizados para saida no arduino
 const int output[] = {
-    22, 24, 26, 28, 30, 32, 34, 36
+    24, 26, 28, 30, 32, 34, 36, 38
 };
 
 int states[8];
@@ -17,9 +17,10 @@ void setup() {
         pinMode(input[i], INPUT);
         pinMode(output[i], OUTPUT);
     }
-    
+
     // Inicializa a comunicaçao serial
     Serial.begin(9600);
+    analogReference(INTERNAL2V56);
 }
 
 void loop() {
@@ -30,7 +31,7 @@ void loop() {
 void toFPGA() {
     if (Serial.available() > 0) {
         int inByte = Serial.read();
-       
+
         switch (inByte) {
             case '1':
                 digitalWrite(output[0], HIGH);
@@ -67,7 +68,7 @@ void toFPGA() {
 
 void fromFPGA() {
     for (int i = 0; i < 4; i++) {
-        Serial.print(digitalRead(input[i]) == HIGH ? '1' : '0');
+        Serial.print(analogRead(input[i]) > 1000 ? '1' : '0');
     }
     Serial.println();
 }
