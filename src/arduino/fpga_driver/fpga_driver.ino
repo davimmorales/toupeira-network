@@ -6,7 +6,7 @@ const int limiarAnalogicoParaDigital = 1000;
 
 // Pinos utilizados para entrada analogica no Arduino
 const int input[] = {
-    8, 9, 10, 11, 12, 13, 14, 15
+    A0, A1, A2, A3, A4, A5, A6, A7
 };
 
 // Pinos utilizados para saida digital do Arduino
@@ -23,7 +23,7 @@ void setup() {
     // Inicializa a comunicacao serial
     Serial.begin(9600);
     // Inicializa referencia analogica
-    analogReference(INTERNAL1V1);
+    analogReference(INTERNAL2V56);  // Tensao 2.5V, compativel com a FPGA
 }
 
 void loop() {
