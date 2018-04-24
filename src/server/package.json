@@ -1,0 +1,35 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "toupeira-network server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davimmorales/toupeira-network.git"
+  },
+  "keywords": [
+    "fpga",
+    "arduino",
+    "nodejs",
+    "naval-battle-game"
+  ],
+  "author": "Davi Melo Morales, Diego Wendel de Oliveira Ferreira, Rodrigo de Farias Ramires",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davimmorales/toupeira-network/issues"
+  },
+  "homepage": "https://github.com/davimmorales/toupeira-network#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "mongodb": "^3.0.7"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-google": "^0.9.1"
+  }
+}
