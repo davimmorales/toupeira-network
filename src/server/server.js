@@ -1,12 +1,10 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var path = require('path');
-var mongodb = require('mongodb');
-
-var ARDUINO_COLLECTION = 'arduino';
+const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
+const Registro = require('./app/models/registro');
 
 // Set an instance of express
-var app = express();
+const app = express();
 // Support parsing of application/json type post data
 app.use(bodyParser.json());
 // Support parsing of application/x-www-form-urlencoded post data
@@ -14,84 +12,93 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Tell express that www is the root of our public web folder
 app.use(express.static(path.join(__dirname, 'www')));
 
-// Create a database variable outside of the database connection callback to reuse the connection pool in your app.
-var db;
+/******************************************************************************/
+/********************************** MONGOOSE **********************************/
+/******************************************************************************/
+// Bring Mongoose into the app
+const mongoose = require('mongoose');
 
-// Connect to the database before starting the application server.
-mongodb.MongoClient.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/toupeira-network', (err, client) => {
-  if (err) {
-    console.log(err);
-    process.exit(1);
-  }
+// Build the connection string
+const dbURI = 'mongodb://localhost:27017/toupeira-network';
 
-  // Save database object from the callback for reuse.
-  db = client.db();
-  console.log('Database connection ready');
+// Create the database connection
+mongoose.connect(dbURI);
 
-  // Initialize the app.
-  var server = app.listen(process.env.PORT || 3000, () => {
-    var port = server.address().port;
-    console.log('App now running on port', port);
+// CONNECTION EVENTS
+// When successfully connected
+mongoose.connection.on('connected', () => {
+  console.log('Mongoose default connection open to ' + dbURI);
+});
+
+// If the connection throws an error
+mongoose.connection.on('error', (err) => {
+  console.log('Mongoose default connection error: ' + err);
+});
+
+// When the connection is disconnected
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose default connection disconnected');
+});
+
+// If the Node process ends, close the Mongoose connection
+process.on('SIGINT', () => {  
+  mongoose.connection.close(() => { 
+    console.log('Mongoose default connection disconnected through app termination'); 
+    process.exit(0); 
   });
 });
 
-// ARDUINO API ROUTES BELOW
+/******************************************************************************/
+/************************** ROTAS PARA API DO ARDUINO *************************/
+/******************************************************************************/
+const router = express.Router();    // Cria uma instância do express Router
 
-// Generic error handler used by all endpoints.
-var handleError = (res, reason, message, code) => {
-  console.log('ERROR: ' + reason);
-  res.status(code || 500).json({'error': message});
-}
+// REGISTRO DAS ROTAS
+// Todas as rotas existentes são prefixadas com /api
+app.use('/api', router);
 
-/*  '/api/send'
- *    GET: saves the send-value in the database
- */
-// app.get('/api/send', (req, res) => {
-//   db.collection(ARDUINO_COLLECTION).find({}).toArray((err, docs) => {
-//     if (err) {
-//       handleError(res, err.message, 'Failed to save arduino send-value.');
-//     } else {
-//       res.status(200).json(docs);
-//     }
-//   });
-// });
+router.get('/receive', (req, res) => {
+  res.json({message: 'Hello World'});
+});
 
-/*  '/api/receive'
- *    GET: retrieves the receive-value saved in the database
- *    POST: saves the receive-value in the database
- */
-// app.get('/api/receive', (req, res) => {
-//   db.collection(ARDUINO_COLLECTION).find({}).toArray((err, docs) => {
-//     if (err) {
-//       handleError(res, err.message, 'Failed to retrieve arduino receive-value.');
-//     } else {
-//       res.status(200).json(docs);
-//     }
-//   });
-// });
-
-app.post('/api/receive', (req, res) => {
+router.post('/receive', (req, res) => {
   console.log('Nova Requisicao POST!');
-  var receiveValue = Number(req.body.receiveValue);
+  const receiveValue = Number(req.body.receiveValue);
   if (inRange(receiveValue, 0, 255)) {
-    db.collection(ARDUINO_COLLECTION).insert(createPair("receiveValue", receiveValue), (err, doc) => {
-      if (err) {
-        handleError(res, err.message, 'Failed to save arduino receive-value.');
-      } else {
-        res.status(201).json(doc.ops[0]);
-      }
+    let registro = new Registro();
+    registro.valor = receiveValue;
+
+    registro.save((err) => {
+      if (err)
+      res.send(err);
+
+      res.status(201).json({message: 'Registro criado!'});
     });
   } else {
     handleError(res, 'Invalid input', 'Must provide a value.', 400);
   }
-
-  
 });
 
-var createPair = (name, value) => {
+/******************************************************************************/
+/************************* FUNÇÕES UTILITÁRIAS E MAIN *************************/
+/******************************************************************************/
+
+const createPair = (name, value) => {
   return {"key": name, "value": value};
 }
 
-var inRange = (value, minValue, maxValue) => {
+const inRange = (value, minValue, maxValue) => {
   return (value >= minValue && value <= maxValue) ? true : false;
 }
+
+// Generic error handler used by all endpoints.
+const handleError = (res, reason, message, code) => {
+  console.log('ERROR: ' + reason);
+  res.status(code || 500).json({'error': message});
+}
+
+// Initialize the app.
+const server = app.listen(process.env.PORT || 3000, () => {
+  const port = server.address().port;
+  console.log('Toupeira\'s server running on port', port);
+});

@@ -35,7 +35,7 @@ void setup() {
     // if you get a connection, report back via serial:
     if (client.connect(server, 3000)) {
         Serial.println("connected");
-        client.println("GET / HTTP/1.1");
+        client.println("GET /api/receive HTTP/1.1");
         client.println("Host: 192.168.1.106:3000"); // Endereco do servidor
         client.println("Connection: close");
         client.println();
