@@ -13,10 +13,10 @@ class ToupeiraClient {
     public:
         ToupeiraClient(const char * ip, int port);        
         void doGet();
-        void doPost();
+        void doPost(int value);
 
     private:
-        void preparaJson();
+        void preparaJson(int value);
         const char * _ip;
         int _port;
 };

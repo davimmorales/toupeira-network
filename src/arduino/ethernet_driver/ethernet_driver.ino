@@ -44,7 +44,7 @@ void loop() {
                 toupeiraClient.doGet();
                 break;
             case '2':
-                toupeiraClient.doPost();
+                toupeiraClient.doPost(11); // TODO: Passar variável e não valor chumbado
                 break;
             default:
                 break;

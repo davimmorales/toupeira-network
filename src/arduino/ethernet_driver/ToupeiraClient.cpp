@@ -52,12 +52,12 @@ void ToupeiraClient::doGet() {
     }
 }
 
-void ToupeiraClient::doPost() {
+void ToupeiraClient::doPost(int value) {
     // Conecta ao servidor
     if (_client.connect(_ip, _port)) {
         Serial.println("\nconectado (POST)");
         _client.println();
-        preparaJson();
+        preparaJson(value);
         Serial.println(json);
         _client.println("POST /api/receive HTTP/1.1");
         _client.println("Host: " + String(_ip) + ":" + _port); // Endereco do servidor
@@ -80,9 +80,9 @@ void ToupeiraClient::doPost() {
 /* 
  *  Procedimento utilitário o qual gera um JSON com os dados das leituras realizadas
  */
-void ToupeiraClient::preparaJson() {
+void ToupeiraClient::preparaJson(int value) {
     json = "";
     json.concat("{\"receiveValue\":");
-    json.concat(/*receiveValue*/42);
+    json.concat(value);
     json.concat("}");
 }
