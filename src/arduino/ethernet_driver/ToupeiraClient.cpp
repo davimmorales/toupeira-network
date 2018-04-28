@@ -11,6 +11,8 @@
 // Ethernet client
 EthernetClient _client;
 
+String json;
+
 ToupeiraClient::ToupeiraClient(const char * ip, int port) {
     _ip = ip;
     _port = port;
@@ -19,7 +21,7 @@ ToupeiraClient::ToupeiraClient(const char * ip, int port) {
 void ToupeiraClient::doGet() {
     // Conecta ao servidor
     if(_client.connect(_ip, _port)) {
-        Serial.println("conectado (GET)");
+        Serial.println("\nconectado (GET)");
         _client.println("GET /api/receive HTTP/1.1");
         _client.println("Host: " + String(_ip) + ":" + _port); // Endereço do servidor
         _client.println("Connection: close");
@@ -53,19 +55,19 @@ void ToupeiraClient::doGet() {
 void ToupeiraClient::doPost() {
     // Conecta ao servidor
     if (_client.connect(_ip, _port)) {
-        Serial.println("conectado (POST)");
-        // client.println();
-        // preparaJSON();
-        // Serial.println(json);
-        // client.println("POST /EstacaoMeteorologica/rest/dados HTTP/1.1");
-        // client.println("Host: 192.168.1.108:8080"); // Endereco do servidor
-        // client.println("Content-Type: application/json; charset=utf-8");
-        // client.println("Connection: close");
-        // client.print("Content-Length: ");
-        // client.println(json.length());
-        // client.println();
-        // client.println(json);
-        // client.println();
+        Serial.println("\nconectado (POST)");
+        _client.println();
+        preparaJson();
+        Serial.println(json);
+        _client.println("POST /api/receive HTTP/1.1");
+        _client.println("Host: " + String(_ip) + ":" + _port); // Endereco do servidor
+        _client.println("Content-Type: application/json; charset=utf-8");
+        _client.println("Connection: close");
+        _client.print("Content-Length: ");
+        _client.println(json.length());
+        _client.println();
+        _client.println(json);
+        _client.println();
     }
     
     // Termina a conexao
@@ -73,4 +75,14 @@ void ToupeiraClient::doPost() {
         _client.stop();
         Serial.println("desconectado (POST)");
     }
+}
+
+/* 
+ *  Procedimento utilitário o qual gera um JSON com os dados das leituras realizadas
+ */
+void ToupeiraClient::preparaJson() {
+    json = "";
+    json.concat("{\"receiveValue\":");
+    json.concat(/*receiveValue*/42);
+    json.concat("}");
 }

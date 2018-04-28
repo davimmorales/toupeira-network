@@ -16,6 +16,7 @@ class ToupeiraClient {
         void doPost();
 
     private:
+        void preparaJson();
         const char * _ip;
         int _port;
 };
