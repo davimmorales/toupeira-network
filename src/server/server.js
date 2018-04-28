@@ -57,21 +57,33 @@ const router = express.Router();    // Cria uma instância do express Router
 // Todas as rotas existentes são prefixadas com /api
 app.use('/api', router);
 
+/**
+ * Retorna o último registro inserido no banco
+ */
 router.get('/receive', (req, res) => {
-  res.json({message: 'Hello World'});
+  const query = Registro.find({});
+  query.findOne().sort({ field: 'asc', _id: -1 });
+  query.exec((err, registros) => {
+    if (err) {
+      res.send(err);
+    }
+    res.json(registros);
+  });
 });
 
+/**
+ * Insere um novo registro no banco
+ */
 router.post('/receive', (req, res) => {
-  console.log('Nova Requisicao POST!');
   const receiveValue = Number(req.body.receiveValue);
   if (inRange(receiveValue, 0, 255)) {
     let registro = new Registro();
     registro.valor = receiveValue;
 
     registro.save((err) => {
-      if (err)
-      res.send(err);
-
+      if (err) {
+        res.send(err);
+      }
       res.status(201).json({message: 'Registro criado!'});
     });
   } else {
