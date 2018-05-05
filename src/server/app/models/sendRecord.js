@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const recordSchema = new Schema({
+const sendRecordSchema = new Schema({
     value: Number,
     date: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('Record', recordSchema);
+module.exports = mongoose.model('SendRecord', sendRecordSchema);

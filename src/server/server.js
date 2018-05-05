@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const Record = require('./app/models/record');
+const serverUtils = require('./app/utils/serverUtils');
+const ReceiveRecord = require('./app/models/receiveRecord');
+const SendRecord = require('./app/models/sendRecord');
 
 // Express app
 const app = express();
@@ -43,10 +45,10 @@ const router = express.Router();
 app.use('/api', router);
 
 /**
- * Returns last record inserted in the database
+ * Returns last record inserted in the database at SendRecord schema
  */
-router.get('/receive', (req, res) => {
-  const query = Record.find({});
+router.get('/send', (req, res) => {
+  const query = SendRecord.find({});
   query.findOne().sort({ field: 'asc', _id: -1 });
   query.select('value');
   query.exec((err, record) => {
@@ -58,34 +60,59 @@ router.get('/receive', (req, res) => {
 });
 
 /**
- * Inserts a new record in the database
+ * Inserts a new record in the database at SendRecord schema
  */
-router.post('/receive', (req, res) => {
-  const receiveValue = Number(req.body.receiveValue);
-  if (inRange(receiveValue, 0, 255)) {
-    let record = new Record();
-    record.value = receiveValue;
+router.post('/send', (req, res) => {
+  const value = Number(req.body.value);
+  if (serverUtils.inRange(value, 0, 255)) {
+    let record = new SendRecord();
+    record.value = value;
 
     record.save((err) => {
       if (err) {
         res.send(err);
       }
-      res.status(201).json({message: 'New record created!'});
+      res.status(201).json({message: 'New record created!', value: value});
     });
   } else {
-    handleError(res, 'Invalid input', 'Must provide a value.', 400);
+    serverUtils.handleError(res, 'Invalid input', 'Must provide a value', 400);
   }
 });
 
-const inRange = (value, minValue, maxValue) => {
-  return (value >= minValue && value <= maxValue) ? true : false;
-}
+/**
+ * Returns last record inserted in the database at ReceiveRecord schema
+ */
+router.get('/receive', (req, res) => {
+  const query = ReceiveRecord.find({});
+  query.findOne().sort({ field: 'asc', _id: -1 });
+  query.select('value');
+  query.exec((err, record) => {
+    if (err) {
+      res.send(err);
+    }
+    res.json(record);
+  });
+});
 
-// Generic error handler used by all endpoints.
-const handleError = (res, reason, message, code) => {
-  console.log('ERROR: ' + reason);
-  res.status(code || 500).json({'error': message});
-}
+/**
+ * Inserts a new record in the database at ReceiveRecord schema
+ */
+router.post('/receive', (req, res) => {
+  const value = Number(req.body.value);
+  if (serverUtils.inRange(value, 0, 255)) {
+    let record = new ReceiveRecord();
+    record.value = value;
+
+    record.save((err) => {
+      if (err) {
+        res.send(err);
+      }
+      res.status(201).json({message: 'New record created!', value: value});
+    });
+  } else {
+    serverUtils.handleError(res, 'Invalid input', 'Must provide a value', 400);
+  }
+});
 
 // Initialize the app
 const server = app.listen(process.env.PORT || 3000, () => {

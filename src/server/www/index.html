@@ -27,9 +27,9 @@
               <form class="form-inline">
                 <div class="form-group mx-sm-3 mb-2">
                   <label for="sendValue" class="sr-only">Value</label>
-                  <input class="form-control" type="text" id="sendValue" value="0" readonly>
+                  <input class="form-control" type="text" id="sendValueInput" value="0" readonly>
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Reload</button>
+                <button id="sendValueButton" type="submit" class="btn btn-primary mb-2">Reload</button>
               </form>
             </div>
             <div class="tab-pane fade" id="v-pills-receive-value" role="tabpanel" aria-labelledby="v-pills-receive-value-tab">
@@ -53,5 +53,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <!-- Other JavaScript files -->
     <script src="js/receiveValue.js"></script>
+    <script src="js/sendValue.js"></script>
   </body>
 </html>

@@ -15,7 +15,7 @@
       url: '/api/receive',
       type: 'POST',
       data: {
-          receiveValue: receiveValueInput.value
+          value: receiveValueInput.value
       },
       success: () => { console.log('Submit receive-value successful'); },
       error: () => { console.log('Submit receive-value failed'); }
