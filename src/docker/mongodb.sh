@@ -1,7 +1,7 @@
 #!/bin/bash
-# Script para subir o container do mongodb
+# Script to run mongodb container
 
-NAME="--name mongo"
+NAME="--name toupeira-network"
 PORTA="-p 27017:27017"
 VOLUME="-v $PWD/data:/data/db"
 
