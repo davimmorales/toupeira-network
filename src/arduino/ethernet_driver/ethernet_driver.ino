@@ -11,17 +11,22 @@
 byte mac[] = { 0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x02 };
 
 // Set the static IP address to use if the DHCP fails to assign
-IPAddress ip(192, 168, 1, 110);
+IPAddress ip(192, 168, 122, 110);
 
-// IP do Servidor
-const char * serverIp = "192.168.1.106";
-int serverPort = 3000;
+// Server's IP
+const char * serverIp = "toupeira-network.herokuapp.com";
+int serverPort = 80;
 ToupeiraClient toupeiraClient(serverIp, serverPort);
+
+// Endpoints
+const char * sendEndpoint = "/api/send";
+const char * receiveEndpoint = "/api/receive";
+
 
 void setup() {
     // Open serial communications and wait for port to open
     Serial.begin(9600);
-    
+
     Serial.println("connecting...");
     // start the Ethernet connection:
     if (Ethernet.begin(mac) == 0) {
@@ -38,16 +43,23 @@ void setup() {
 void loop() {
     if (Serial.available() > 0) {
         int inByte = Serial.read();
-       
+      Serial.println("available");
         switch (inByte) {
             case '1':
-                toupeiraClient.doGet();
-                break;
+                  toupeiraClient.doGet(sendEndpoint);
+                  
+            break;
             case '2':
-                toupeiraClient.doPost(11); // TODO: Passar variável e não valor chumbado
-                break;
+                  toupeiraClient.doPost(sendEndpoint,11); // TODO: Passar variável e não valor chumbado
+            break;
+            case '3':
+                  toupeiraClient.doGet(receiveEndpoint);
+            break;
+            case '4':
+                  toupeiraClient.doPost(receiveEndpoint,11); // TODO: Passar variável e não valor chumbado
+            break;
             default:
-                break;
+            break;
         }
     }
 }

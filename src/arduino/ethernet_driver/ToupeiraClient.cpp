@@ -18,19 +18,19 @@ ToupeiraClient::ToupeiraClient(const char * ip, int port) {
     _port = port;
 }
 
-void ToupeiraClient::doGet() {
+void ToupeiraClient::doGet(const char * endpoint) {
     // Conecta ao servidor
     if(_client.connect(_ip, _port)) {
         Serial.println("\nconectado (GET)");
-        _client.println("GET /api/receive HTTP/1.1");
+        _client.println("GET " + String(endpoint) + " HTTP/1.1");
         _client.println("Host: " + String(_ip) + ":" + _port); // Endereço do servidor
         _client.println("Connection: close");
-        _client.println();        
+        _client.println();
     } else {
         // if you didn't get a connection to the server:
         Serial.println("connection failed");
     }
-    
+
     // Aguarda os dados
     while(_client.connected() && !_client.available()) delay(1);
     // Conectado ou dados disponiveis
@@ -52,14 +52,14 @@ void ToupeiraClient::doGet() {
     }
 }
 
-void ToupeiraClient::doPost(int value) {
+void ToupeiraClient::doPost(const char * endpoint, int value) {
     // Conecta ao servidor
     if (_client.connect(_ip, _port)) {
         Serial.println("\nconectado (POST)");
         _client.println();
         preparaJson(value);
         Serial.println(json);
-        _client.println("POST /api/receive HTTP/1.1");
+        _client.println("POST " + String(endpoint) + " HTTP/1.1");
         _client.println("Host: " + String(_ip) + ":" + _port); // Endereco do servidor
         _client.println("Content-Type: application/json; charset=utf-8");
         _client.println("Connection: close");
@@ -69,7 +69,7 @@ void ToupeiraClient::doPost(int value) {
         _client.println(json);
         _client.println();
     }
-    
+
     // Termina a conexao
     if (_client.connected()) {
         _client.stop();
@@ -77,12 +77,12 @@ void ToupeiraClient::doPost(int value) {
     }
 }
 
-/* 
+/*
  *  Procedimento utilitário o qual gera um JSON com os dados das leituras realizadas
  */
 void ToupeiraClient::preparaJson(int value) {
     json = "";
-    json.concat("{\"receiveValue\":");
+    json.concat("{\"value\":");
     json.concat(value);
     json.concat("}");
 }

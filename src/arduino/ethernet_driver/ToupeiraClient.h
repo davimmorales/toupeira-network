@@ -11,9 +11,9 @@
 
 class ToupeiraClient {
     public:
-        ToupeiraClient(const char * ip, int port);        
-        void doGet();
-        void doPost(int value);
+        ToupeiraClient(const char * ip, int port);
+        void doGet(const char * endpoint);
+        void doPost(const char * endpoint, int value);
 
     private:
         void preparaJson(int value);
