@@ -1,0 +1,7 @@
+{
+  "name": "toupeira-network",
+  "version": "0.1.0",
+  "scripts": {
+    "postinstall": "npm install --prefix src/server"
+  }
+}
