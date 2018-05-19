@@ -1,33 +1,13 @@
 /**
-* Driver arduino ethernet
-*/
+ * Driver arduino ethernet
+ */
 
-// Ethernet Libraries
+// Bibliotecas Ethernet
 #include <SPI.h>
 #include <Ethernet.h>
 #include "ToupeiraClient.h"
 
-
-// i/o pins amount
-const int ioPinsAmnt = 8;
-
-// Threshold for analog to digital entry conversion
-const int analogToDigThreshold= 1000;
-
-// Arduino's analog input
-const int input[] = {
-  A0, A1, A2, A3, A8, A9, A10, A11
-};
-
-// Arduino's digital output
-const int output[] = {
-  24, 26, 28, 30, 32, 34, 36, 38
-};
-
-// Auxiliary variable for simple protocol
-int previousInByte = 0;
-
-// Ethernet Shield's MAC Address
+// Endereço MAC do Ethernet Shield
 byte mac[] = { 0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x02 };
 
 // Set the static IP address to use if the DHCP fails to assign
@@ -42,120 +22,111 @@ ToupeiraClient toupeiraClient(serverIp, serverPort);
 const char * sendEndpoint = "/api/send";
 const char * receiveEndpoint = "/api/receive";
 
+int objectReceived;
+int ioPinsAmnt = 8;
+
+const int analogToDigitalThreshold = 1000;
+const int input[] = {
+    A0, A1, A2, A3, A4, A5, A8, A9
+};
+
+const int output[] = {
+    24, 28, 32, 36, 40, 44, 48, 52
+};
 
 void setup() {
+    // Open serial communications and wait for port to open
 
-  // Initalizes FPGA's outputs
-  for (int i = 0; i < ioPinsAmnt; i++) {
-    pinMode(input[i], INPUT);
-    pinMode(output[i], OUTPUT);
-  }
+    for (int i = 0; i < ioPinsAmnt; i++) {
+        pinMode(input[i], INPUT);
+        pinMode(output[i], OUTPUT);
+    }
 
-  // Initalizes analog refernece
-  analogReference(INTERNAL2V56);  // Tensao 2.5V, compativel com a FPGA
+    Serial.begin(9600);
 
-  // Open serial communications and wait for port to open
-  Serial.begin(9600);
+    analogReference(INTERNAL1V1);
 
+    Serial.println("connecting...");
+    // start the Ethernet connection:
+    if (Ethernet.begin(mac) == 0) {
+        Serial.println("Failed to configure Ethernet using DHCP");
+        // try to congifure using IP address instead of DHCP
+        Ethernet.begin(mac, ip);
+    }
 
-  Serial.println("connecting...");
-  // start the Ethernet connection:
-  if (Ethernet.begin(mac) == 0) {
-    Serial.println("Failed to configure Ethernet using DHCP");
-    // try to congifure using IP address instead of DHCP
-    Ethernet.begin(mac, ip);
-  }
+    // give the Ethernet shield a second to initialize
+    delay(1000);
+    Serial.println("connected...");
 
-  // give the Ethernet shield a second to initialize
-  delay(1000);
-  Serial.println("connected...");
 }
 
 void loop() {
 
-  // if (Serial.available() > 0) {
-    // int sendValue = Serial.read();
-    int inByte = binaryToDecimal();
-    // Serial.println("available");
-    Serial.println(inByte);
-    if (inByte<5) {
-      if (inByte!=previousInByte) {
-        previousInByte = inByte;
-        switch (inByte) {
-          case '1':
-          toupeiraClient.doGet(sendEndpoint);
-          break;
-          case '2':
-          toupeiraClient.doPost(sendEndpoint, sendValue); // TODO: Passar variável e não valor chumbado
-          break;
-          case '3':
-          toupeiraClient.doGet(receiveEndpoint);
-          break;
-          case '4':
-          toupeiraClient.doPost(receiveEndpoint, sendValue); // TODO: Passar variável e não valor chumbado
-          break;
-          default:
-          break;
+
+  int inByte;
+    if (Serial.available() > 0) {
+        int operation = Serial.read();
+      Serial.println("available");
+        switch (operation) {
+            case '1':
+                 inByte = binaryToDecimalFromFPGA();
+                 //if (inByte != previousInByte) {
+                   Serial.println(inByte);
+                 //  previousInByte = inByte;
+                   toupeiraClient.doPost(sendEndpoint, inByte);
+                // }
+            break;
+            // case '2':
+            //       toupeiraClient.doPost(sendEndpoint,11); // TODO: Passar variável e não valor chumbado
+            // break;
+            case '3':
+                  objectReceived = toupeiraClient.doGet(receiveEndpoint);
+                  Serial.println(objectReceived);
+                  toFPGA(objectReceived);
+            break;
+            // case '4':
+            //       toupeiraClient.doPost(receiveEndpoint,11); // TODO: Passar variável e não valor chumbado
+            // break;
+            default:
+            break;
         }
-      }
     }
-  // }
 }
 
-  void toFPGA() {
-    if (Serial.available() > 0) {
-      int inByte = Serial.read();
+void toFPGA(int value) {
+  decimalToBinary(toupeiraClient.doGet(receiveEndpoint));
+}
 
-      switch (inByte) {
-        case '1':
-        digitalWrite(output[0], HIGH);
-        break;
-        case '2':
-        digitalWrite(output[1], HIGH);
-        break;
-        case '3':
-        digitalWrite(output[2], HIGH);
-        break;
-        case '4':
-        digitalWrite(output[3], HIGH);
-        break;
-        case '5':
-        digitalWrite(output[4], HIGH);
-        break;
-        case '6':
-        digitalWrite(output[5], HIGH);
-        break;
-        case '7':
-        digitalWrite(output[6], HIGH);
-        break;
-        case '8':
-        digitalWrite(output[7], HIGH);
-        break;
-        default:
-        // writes all outputs as LOW
-        for (int i = 0; i < ioPinsAmnt; i++) {
-          digitalWrite(output[i], LOW);
-        }
-      }
+int decimalToBinary(int value) {
+  for (int i = 0; i < ioPinsAmnt; i++) {
+    int index = ioPinsAmnt-1-i;
+    ((value/power(2, index)) > 0) ?
+    digitalWrite(output[i], HIGH) : digitalWrite(output[i], LOW);
+
+    value = (value % power(2, index));
+  }
+}
+
+int power(int value, int exponent) {
+  int result = 1;
+  for (int i = 0; i < exponent; i++) {
+    result *= value;
+  }
+  return result;
+}
+
+int binaryToDecimalFromFPGA() {
+  int decimal = 0;
+  int power = 1;
+  for (int i = 0; i < ioPinsAmnt; i++) {
+    if (analogToDigital(i)) {
+      decimal += power;
     }
+    power *= 2;
   }
+  return decimal;
+}
 
-  void fromFPGA() {
-    Serial.println(binaryToDecimal());
-  }
-
-  int binaryToDecimal() {
-    int decimal = 0;
-    int power = 1;
-    for (int i = 0; i < ioPinsAmnt; i++) {
-      if (analogToDigital(i)) {
-        decimal += power;
-      }
-      power *= 2;
-    }
-    return decimal;
-  }
-
-  int analogToDigital(int index) {
-    return analogRead(input[index]) >= analogToDigThreshold ? 1 : 0;
-  }
+int analogToDigital(int index) {
+  return analogRead(input[index]) >= analogToDigitalThreshold ? 1 : 0;
+}
