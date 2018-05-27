@@ -22,6 +22,8 @@ ToupeiraClient toupeiraClient(serverIp, serverPort);
 const char * sendEndpoint = "/api/send";
 const char * receiveEndpoint = "/api/receive";
 
+int objectReceived;
+int ioPinsAmnt = 8;
 
 void setup() {
     // Open serial communications and wait for port to open
@@ -47,13 +49,14 @@ void loop() {
         switch (inByte) {
             case '1':
                   toupeiraClient.doGet(sendEndpoint);
-                  
             break;
             case '2':
                   toupeiraClient.doPost(sendEndpoint,11); // TODO: Passar variável e não valor chumbado
             break;
             case '3':
-                  toupeiraClient.doGet(receiveEndpoint);
+                  objectReceived = toupeiraClient.doGet(receiveEndpoint);
+                  Serial.println(objectReceived);
+                  toFPGA(objectReceived);
             break;
             case '4':
                   toupeiraClient.doPost(receiveEndpoint,11); // TODO: Passar variável e não valor chumbado
@@ -62,4 +65,26 @@ void loop() {
             break;
         }
     }
+}
+
+void toFPGA(int value) {
+  decimalToBinary(toupeiraClient.doGet(receiveEndpoint));
+}
+
+int decimalToBinary(int value) {
+  for (int i = 0; i < ioPinsAmnt; i++) {
+    int index = ioPinsAmnt-1-i;
+    ((value/power(2, index)) > 0) ?
+    //  digitalWrite(output[i], HIGH) : digitalWrite(output[i], LOW);
+    Serial.print(1): Serial.print(0);
+    value = (value % power(2, index));
+  }
+}
+
+int power(int value, int exponent) {
+  int result = 1;
+  for (int i = 0; i < exponent; i++) {
+    result *= value;
+  }
+  return result;
 }

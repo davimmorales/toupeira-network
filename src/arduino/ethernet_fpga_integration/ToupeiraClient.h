@@ -12,7 +12,7 @@
 class ToupeiraClient {
     public:
         ToupeiraClient(const char * ip, int port);
-        void doGet(const char * endpoint);
+        int doGet(const char * endpoint);
         void doPost(const char * endpoint, int value);
 
     private:

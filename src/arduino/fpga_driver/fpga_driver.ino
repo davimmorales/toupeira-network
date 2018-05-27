@@ -6,7 +6,7 @@ const int limiarAnalogicoParaDigital = 1000;
 
 // Pinos utilizados para entrada analogica no Arduino
 const int input[] = {
-    A0, A1, A2, A3, A4, A5, A6, A7
+    A0, A1, A2, A3, A4, A5, A8, A9
 };
 
 // Pinos utilizados para saida digital do Arduino

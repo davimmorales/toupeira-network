@@ -1,58 +1,47 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
-    <title>Toupeira Network</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/game.css">
   </head>
-  <body>
-    <h1>Toupeira Network</h1>
 
-    <div class="row">
-      <div class="col-3">
-        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-          <a class="nav-link active" id="v-pills-send-value-tab" data-toggle="pill" href="#v-pills-send-value" role="tab" aria-controls="v-pills-send-value" aria-selected="true">Send</a>
-      <a class="nav-link" id="v-pills-receive-value-tab" data-toggle="pill" href="#v-pills-receive-value" role="tab" aria-controls="v-pills-receive-value" aria-selected="false">Receive</a>
-        </div>
-      </div>
-      <div class="col-9">
-        <div class="tab-content" id="v-pills-tabContent">
-          <div class="tab-content" id="v-pills-tabContent">
-            <div class="tab-pane fade show active" id="v-pills-send-value" role="tabpanel" aria-labelledby="v-pills-send-value-tab">
-              <form class="form-inline">
-                <div class="form-group mx-sm-3 mb-2">
-                  <label for="sendValue" class="sr-only">Value</label>
-                  <input class="form-control" type="text" id="sendValueInput" value="0" readonly>
-                </div>
-                <button id="sendValueButton" type="submit" class="btn btn-primary mb-2">Reload</button>
-              </form>
+  <body>
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-sm">
+            <img src="img/ship.jpg" alt="ships" style="width:75%" >
+          </div>
+          <div class="col-sm">
+            <h1>Toupeira</h1>
+            <h5>Battleship</h5>
+            <div id="startGame" class="no-show">  
+                <a id="startGameButton" class="btn btn-success btn-lg btn-block" role="button" aria-pressed="true">Start Game</a>
             </div>
-            <div class="tab-pane fade" id="v-pills-receive-value" role="tabpanel" aria-labelledby="v-pills-receive-value-tab">
-              <form method="post" class="form-inline">
-                <div class="form-group mx-sm-3 mb-2">
-                  <label for="receiveValue" class="sr-only">Value</label>
-                  <input class="form-control" type="text" id="receiveValueInput" value="0">
+            <div id="selectPlayer" class="no-show" >
+                <p>Choose your side</p>
+                <div class="row">
+                  <div class="col-sm">
+                    <a href="game.html?player=1" class="btn btn-primary btn-block btn-lg" target="_blank" role="button" aria-pressed="true">Player 1</a>
+                  </div>
+                  <div class="col-sm">
+                    <a href="game.html?player=2" class="btn btn-danger btn-block btn-lg" target="_blank" role="button" aria-pressed="true">Player 2</a>
+                  </div>
                 </div>
-                <button id="receiveValueButton" type="submit" class="btn btn-primary mb-2">Submit</button>
-              </form>
             </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <!-- Other JavaScript files -->
-    <script src="js/receiveValue.js"></script>
-    <script src="js/sendValue.js"></script>
+  
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+  <!-- Other JavaScript files -->
+  <script src="js/gameStatus.js"></script>
   </body>
 </html>

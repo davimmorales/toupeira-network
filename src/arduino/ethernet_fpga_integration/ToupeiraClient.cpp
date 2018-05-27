@@ -18,7 +18,10 @@ ToupeiraClient::ToupeiraClient(const char * ip, int port) {
     _port = port;
 }
 
-void ToupeiraClient::doGet(const char * endpoint) {
+int ToupeiraClient::doGet(const char * endpoint) {
+    String getContent;
+    String getValue;
+    int flagRead = 0;
     // Conecta ao servidor
     if(_client.connect(_ip, _port)) {
         Serial.println("\nconectado (GET)");
@@ -39,7 +42,8 @@ void ToupeiraClient::doGet(const char * endpoint) {
         //decodificaDados();
         if (_client.available()) {
             char c = _client.read();
-            Serial.print(c);
+            Serial.print(c);           
+            getContent = getContent+String(c);
         }
 
         // if the server's disconnected, stop the client:
@@ -50,6 +54,9 @@ void ToupeiraClient::doGet(const char * endpoint) {
             _client.stop();
         }
     }
+
+    getValue = (getContent.substring(getContent.indexOf("\"value\":")+8, getContent.length()-1));
+    return getValue.toInt();
 }
 
 void ToupeiraClient::doPost(const char * endpoint, int value) {
