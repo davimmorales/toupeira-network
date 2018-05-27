@@ -29,17 +29,17 @@
       type: 'GET',
       dataType: 'json',
       success: (jsonData) => {
-        updatePlayersBoards(jsonData.progress);
-        updatePlayersScores(jsonData.progress);
-        displayWinner(jsonData.progress);
+        updatePlayersBoards(jsonData.game);
+        updatePlayersScores(jsonData.game);
+        displayWinner(jsonData.game);
       },
       error: () => { console.log('Refresh failed'); }
     });
   }
 
-  const updatePlayersScores = (progress) => {
-    updateScore('player1Score', progress.player1.score);
-    updateScore('player2Score', progress.player2.score);
+  const updatePlayersScores = (game) => {
+    updateScore('player1Score', game.player1.score);
+    updateScore('player2Score', game.player2.score);
   }
 
   const updateScore = (id, score) => {
@@ -47,11 +47,11 @@
     document.getElementById(id).innerText = scoreFormattedString;
   }
 
-  const updatePlayersBoards = (progress) => {
-    let showShipsOnPlayer1Board = (Number(progress.playerId) === 1) ? true : false;
-    let showShipsOnPlayer2Board = (Number(progress.playerId) === 2) ? true : false;
-    updateBoard('player1Board', progress.player1.board, showShipsOnPlayer1Board);
-    updateBoard('player2Board', progress.player2.board, showShipsOnPlayer2Board);
+  const updatePlayersBoards = (game) => {
+    let showShipsOnPlayer1Board = (Number(game.playerId) === 1) ? true : false;
+    let showShipsOnPlayer2Board = (Number(game.playerId) === 2) ? true : false;
+    updateBoard('player1Board', game.player1.board, showShipsOnPlayer1Board);
+    updateBoard('player2Board', game.player2.board, showShipsOnPlayer2Board);
   }
 
   const updateBoard = (id, board, showLivingShips) => {
@@ -69,12 +69,12 @@
     return (row * numberOfSquaresInARow) + column;
   }
 
-  const updateSquare = (squareElement, square, showLivingShips) => {
+  const updateSquare = (squareElement, symbolString, showLivingShips) => {
     let classList = squareElement.classList;
-    if (classList.contains(DEFAULT_SQUARE.CLASS) &&
-          square.symbol !== DEFAULT_SQUARE.SYMBOL) {
+    let symbol = Symbol.for(symbolString);
+    if (classList.contains(DEFAULT_SQUARE.CLASS) && symbol !== DEFAULT_SQUARE.SYMBOL) {
       classList.remove(DEFAULT_SQUARE.CLASS);
-      classList.add(getClassBySymbol(square.symbol, showLivingShips));
+      classList.add(getClassBySymbol(symbol, showLivingShips));
     }
   }
 
@@ -93,9 +93,9 @@
     }
   }
 
-  const displayWinner = (progress) => {
-    appendTrophyIfHasScoreToWin('player1Name', progress.player1.score);
-    appendTrophyIfHasScoreToWin('player2Name', progress.player2.score);
+  const displayWinner = (game) => {
+    appendTrophyIfHasScoreToWin('player1Name', game.player1.score);
+    appendTrophyIfHasScoreToWin('player2Name', game.player2.score);
   }
 
   const appendTrophyIfHasScoreToWin = (id, score) => {

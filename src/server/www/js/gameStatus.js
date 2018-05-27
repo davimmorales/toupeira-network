@@ -25,7 +25,7 @@
       type: 'GET',
       dataType: 'json',
       success: (jsonData) => {
-        enableSelectPlayerArea(jsonData.status.inProgress);
+        enableSelectPlayerArea(jsonData.game.inProgress);
       },
       error: () => { console.log('Refresh failed'); }
     });
