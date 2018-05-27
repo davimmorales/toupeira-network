@@ -48,10 +48,16 @@
   }
 
   const updatePlayersBoards = (game) => {
-    let showShipsOnPlayer1Board = (Number(game.playerId) === 1) ? true : false;
-    let showShipsOnPlayer2Board = (Number(game.playerId) === 2) ? true : false;
+    const contextualizedPlayer = Number(getPlayerOfThisPage());
+    let showShipsOnPlayer1Board = (contextualizedPlayer === 1) ? true : false;
+    let showShipsOnPlayer2Board = (contextualizedPlayer === 2) ? true : false;
     updateBoard('player1Board', game.player1.board, showShipsOnPlayer1Board);
     updateBoard('player2Board', game.player2.board, showShipsOnPlayer2Board);
+  }
+
+  const getPlayerOfThisPage = () => {
+    let params = new URLSearchParams(window.location.search.substring(1));
+    return (params.has('player')) ? params.get('player') : null;
   }
 
   const updateBoard = (id, board, showLivingShips) => {
