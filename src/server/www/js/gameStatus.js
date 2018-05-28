@@ -1,7 +1,15 @@
 (() => {
 
   const initialize = () => {
-    $('#startGameButton').click(startGame);
+    $.ajax({
+      url: '/game/start',
+      type: 'POST',
+      data: {startGame: true},
+      success: () => {
+        enableSelectPlayerArea(true);
+      },
+      error: () => { console.log('Start game failed'); }
+    });
   }
 
   const startGame = (evt) => {
@@ -25,7 +33,7 @@
       type: 'GET',
       dataType: 'json',
       success: (jsonData) => {
-        enableSelectPlayerArea(jsonData.game.inProgress);
+        enableSelectPlayerArea(jsonData.inProgress);
       },
       error: () => { console.log('Refresh failed'); }
     });
