@@ -1,9 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const mongoose = require('./app/database/mongoose'); // Listeners of mongoose
 const serverUtils = require('./app/utils/serverUtils');
 const GameRecord = require('./app/models/gameRecord');
+
+require('./config/database')();
 
 // Express app
 const app = express();
@@ -11,8 +12,8 @@ const app = express();
 app.use(bodyParser.json());
 // Support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true })); 
-// Tell express that www is the root of our public web folder
-app.use(express.static(path.join(__dirname, 'www')));
+// Tell express that public is the root of our public web folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // API Routes
 const router = express.Router();
