@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 const logger = require('../app/utils/logger');
-const dbURI = 'mongodb://localhost:27017/toupeira-network';
 
-module.exports = () => {
-	// Mongoose database
-  mongoose.connect(process.env.MONGODB_URI || dbURI);
+module.exports = (uri) => {
+  // Mongoose database
+  mongoose.connect(uri);
 
   // When successfully connected
   mongoose.connection.on('connected', () => {
-    logger.success('Mongoose default connection open to ' + dbURI);
+    logger.success('Mongoose default connection open to ' + uri);
   });
 
   // If the connection throws an error

@@ -1,19 +1,11 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
-const serverUtils = require('./app/utils/serverUtils');
 const GameRecord = require('./app/models/gameRecord');
 
-require('./config/database')();
-
-// Express app
-const app = express();
-// Support parsing of application/json type post data
-app.use(bodyParser.json());
-// Support parsing of application/x-www-form-urlencoded post data
-app.use(bodyParser.urlencoded({ extended: true })); 
-// Tell express that public is the root of our public web folder
-app.use(express.static(path.join(__dirname, 'public')));
+const http = require('http');
+const app = require('./config/express')();
+const config = require('./config/config')();
+const logger = require('./app/utils/logger');
+require('./config/database')(config.database);
 
 // API Routes
 const router = express.Router();
@@ -53,7 +45,6 @@ router.post('/start', (req, res) => {
 });
 
 // Initialize the app
-const server = app.listen(process.env.PORT || 3000, () => {
-  const port = server.address().port;
-  console.log('Toupeira\'s server running on port', port);
+http.createServer(app).listen(config.port, config.address, () => {
+  logger.success('Toupeira server running on port ' + config.port);
 });
