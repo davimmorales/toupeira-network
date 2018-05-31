@@ -1,5 +1,6 @@
 const bodyParser = require('body-parser');
 const express = require('express');
+const load = require('express-load');
 
 module.exports = () => {
   // Express app
@@ -11,6 +12,14 @@ module.exports = () => {
   app.use(bodyParser.urlencoded({ extended: true }));
   // Tell express that public is the root of our public web folder
   app.use(express.static('./public'));
+
+  app.set('view engine', 'ejs');
+  app.set('views','./app/views');
+
+  load('models', {cwd: 'app'})
+    .then('controllers')
+    .then('routes')
+    .into(app);
 
 	return app;
 };

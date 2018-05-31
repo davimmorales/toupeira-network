@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/game.css">
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-sm">
+          <img src="img/ship.jpg" alt="ships" style="width:75%" >
+        </div>
+        <div class="col-sm">
+          <h1>Toupeira</h1>
+          <h5>Battleship</h5>
+          <div id="startGame" class="no-show">,
+              <a id="startGameButton" class="btn btn-success btn-lg btn-block" role="button" aria-pressed="true">Start Game</a>
+          </div>
+          <div id="selectPlayer" class="no-show" >
+              <p>Choose your side</p>
+              <div class="row">
+                <div class="col-sm">
+                  <a href="game.html?player=1" class="btn btn-primary btn-block btn-lg" target="_blank" role="button" aria-pressed="true">Player 1</a>
+                </div>
+                <div class="col-sm">
+                  <a href="game.html?player=2" class="btn btn-danger btn-block btn-lg" target="_blank" role="button" aria-pressed="true">Player 2</a>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <!-- Other JavaScript files -->
+    <script src="js/gameStatus.js"></script>
+  </body>
+</html>
