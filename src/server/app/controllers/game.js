@@ -1,6 +1,10 @@
 module.exports = (app) => {
   var GameRecord = app.models.gameRecord;
   const GameController = {
+    player(req, res) {
+      let playerId = req.query.player;
+      res.render('game');
+    },
     start(req, res) {
       const start = req.body.startGame;
       GameRecord.find({}, (err, game) => {
