@@ -22,6 +22,8 @@
   const TROPHY = '🏆';
   const TROPHY_HTML = `<span style="color: gold">${TROPHY}</span>`;
   const SCORE_TO_WIN = 20;
+  const TURN = '◉';
+  const TURN_HTML = `<span style="color: green">${TURN}</span>`;
 
   const refreshPage = () => {
     $.ajax({
@@ -121,6 +123,28 @@
     }
   }
 
+  const displayTurn = (game) => {
+    appendTurn('player1Name', game.nextPlayerId, 1);
+    appendTurn('player2Name', game.nextPlayerId, 2);
+  }
+
+  const appendTurn = (id, next, side) => {
+    if (isPlayersTurn(next, side)) {
+      appendTurnToName(id);
+    }
+  }
+
+  const isPlayersTurn = (next, side) => {
+    return Number(next) != Number(side);
+  }
+
+  const appendTurnToName = (id) => {
+    let name = document.getElementById(id);
+    if (!name.innerHTML.includes(TURN_HTML)) {
+      name.innerHTML = name.innerHTML.concat(' ').concat(TURN_HTML);
+    }
+  }
+
   $(document).ready(window.setInterval(refreshPage, 1000));
-  
+
 })();
