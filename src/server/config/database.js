@@ -23,8 +23,9 @@ module.exports = (uri) => {
   // If the Node process ends, close the Mongoose connection
   process.on('SIGINT', () => {
     mongoose.connection.close(() => {
-      logger.warning('Mongoose default connection disconnected through app termination');
+      logger.warning('Mongoose default connection'
+        + ' disconnected through app termination');
       process.exit(0);
     });
   });
-}
+};

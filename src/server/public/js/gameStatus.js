@@ -1,17 +1,4 @@
 (() => {
-
-  const initialize = () => {
-    $.ajax({
-      url: '/game/start',
-      type: 'POST',
-      data: {startGame: true},
-      success: () => {
-        enableSelectPlayerArea(true);
-      },
-      error: () => { console.log('Start game failed'); }
-    });
-  }
-
   const startGame = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
@@ -23,9 +10,11 @@
       success: () => {
         enableSelectPlayerArea(true);
       },
-      error: () => { console.log('Start game failed'); }
+      error: () => {
+        console.log('Start game failed');
+      },
     });
-  }
+  };
 
   const refreshPage = () => {
     $.ajax({
@@ -33,11 +22,13 @@
       type: 'GET',
       dataType: 'json',
       success: (jsonData) => {
-        enableSelectPlayerArea(jsonData.inProgress);
+        enableSelectPlayerArea(jsonData ? jsonData.inProgress : false);
       },
-      error: () => { console.log('Refresh failed'); }
+      error: () => {
+        console.log('Refresh failed');
+      },
     });
-  }
+  };
 
   const enableSelectPlayerArea = (inProgress) => {
     if (inProgress === true) {
@@ -47,9 +38,8 @@
       document.getElementById('startGame').setAttribute('class', '');
       document.getElementById('selectPlayer').setAttribute('class', 'no-show');
     }
-  }
+  };
 
-  $(document).ready(initialize);
+  $(document).ready($('#startGameButton').click(startGame));
   $(document).ready(window.setInterval(refreshPage, 1000));
-
 })();

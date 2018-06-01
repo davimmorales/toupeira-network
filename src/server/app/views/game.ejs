@@ -6,6 +6,7 @@
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/game.css">
 </head>
 
 <body>
@@ -15,7 +16,10 @@
     </div>
     <div class="row align-items-center">
       <div class="col-md">
-        <h3 id="player1Name" class="text-primary text-center" >Player 1</h3>
+        <div class="row align-items-center">
+          <h3 id="player1Name" class="col-8 text-primary text-right" >Player 1</h3>
+          <h3 id="player1Emoji" class="col-4 text-left no-show lawngreen">◉</h3>
+        </div>
         <h5 class="text-center">SCORE</h5>
         <h1 id="player1Score" class="text-center text-light bg-dark">00</h1>
         <div id="player1Board">
@@ -168,7 +172,10 @@
       <div class="col-sm">
       </div>
       <div class="col-md">
-        <h3 id="player2Name" class="text-danger text-center">Player 2</h3>
+        <div class="row align-items-center">
+          <h3 id="player2Name" class="col-8 text-danger text-right" >Player 2</h3>
+          <h3 id="player2Emoji" class="col-4 text-left no-show lawngreen">◉</h3>
+        </div>
         <h5 class="text-center">SCORE</h5>
         <h1 id="player2Score" class="text-center text-light bg-dark">00</h1>
         <div id="player2Board">
@@ -326,6 +333,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
   <!-- Other JavaScript files -->
-  <script src="../js/gameProgress.js"></script>
+  <script src="/js/gameProgress.js"></script>
 </body>
 </html>

@@ -1,3 +1,11 @@
 .no-show {
-    display: none;
+  display: none;
+}
+
+.gold {
+  color: gold;
+}
+
+.lawngreen {
+  color: lawngreen;
 }

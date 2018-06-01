@@ -1,11 +1,12 @@
 #!/bin/bash
 # Script to run mongodb container
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 NAME="--name toupeira-network"
-PORTA="-p 27017:27017"
-VOLUME="-v $PWD/data:/data/db"
+PORTS="-p 27017:27017"
+VOLUME="-v $DIR/data:/data/db"
 
-docker run $NAME \
-    $PORTA \
-    $VOLUME \
-    -d mongo
+docker run  $NAME \
+            $PORTS \
+            $VOLUME \
+            -d mongo
