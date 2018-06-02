@@ -1,7 +1,5 @@
 module.exports = {
-	env: 'development',
-	database: 'mongodb://localhost:27017/toupeira-network',
-	port: 3000,
-	address: 'localhost',
-	domain: 'localhost:3000'
+  MONGODB_URI: 'mongodb://localhost:27017/toupeira-network',
+  ADDRESS: 'localhost',
+  PORT: 3000,
 };
