@@ -45,7 +45,7 @@ module.exports = (app) => {
         if (err) {
           res.status(500).send(err);
         } else if (game) {
-          if (game.inProgress === true && game.nextPlayerId === playerId) {
+          if (game.inProgress === true && game.currentPlayerId === playerId) {
             let result;
             switch (playerId) {
               case 1:
@@ -56,7 +56,7 @@ module.exports = (app) => {
                   }
                   game.inProgress =
                     utils.hasScoreToWin(game.player1.score) ? false : true;
-                  game.nextPlayerId = utils.getNextPlayerId(playerId);
+                  game.currentPlayerId = utils.getNextPlayerId(playerId);
                   GameRecord.findByIdAndUpdate(
                     game.id,
                     game,
@@ -81,7 +81,7 @@ module.exports = (app) => {
                   }
                   game.inProgress =
                     utils.hasScoreToWin(game.player2.score) ? false : true;
-                  game.nextPlayerId = utils.getNextPlayerId(playerId);
+                  game.currentPlayerId = utils.getNextPlayerId(playerId);
                   GameRecord.findByIdAndUpdate(
                     game.id,
                     game,
@@ -124,15 +124,15 @@ module.exports = (app) => {
         }
       });
     },
-    nextPlayer(req, res) {
+    currentPlayer(req, res) {
       const query = GameRecord.find({});
       query.findOne().sort({_id: -1});
-      query.select('nextPlayerId');
-      query.exec((err, nextPlayer) => {
+      query.select('currentPlayerId');
+      query.exec((err, currentPlayer) => {
         if (err) {
           res.status(500).send(err);
         } else {
-          res.status(200).json(nextPlayer);
+          res.status(200).json(currentPlayer);
         }
       });
     },

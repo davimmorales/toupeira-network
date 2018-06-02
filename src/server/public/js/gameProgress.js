@@ -117,20 +117,20 @@
 
   const displayPlayersTurn = (game) => {
     if (game.inProgress === true) {
-      showTurnIfIsPlayersTurn('player1Emoji', game.nextPlayerId, 1);
-      showTurnIfIsPlayersTurn('player2Emoji', game.nextPlayerId, 2);
-      hideNotNextPlayersTurn(game.nextPlayerId);
+      showTurnIfIsPlayersTurn('player1Emoji', game.currentPlayerId, 1);
+      showTurnIfIsPlayersTurn('player2Emoji', game.currentPlayerId, 2);
+      hideNotCurrentPlayersTurn(game.currentPlayerId);
     }
   };
 
-  const showTurnIfIsPlayersTurn = (id, next, side) => {
-    if (isPlayersTurn(next, side)) {
+  const showTurnIfIsPlayersTurn = (id, current, side) => {
+    if (isPlayersTurn(current, side)) {
       showTurn(id);
     }
   };
 
-  const isPlayersTurn = (next, side) => {
-    return Number(next) === Number(side);
+  const isPlayersTurn = (current, side) => {
+    return Number(current) === Number(side);
   };
 
   const showTurn = (id) => {
@@ -142,9 +142,9 @@
     removeClass(classList, NO_SHOW_CLASS);
   };
 
-  const hideNotNextPlayersTurn = (nextPlayerId) => {
+  const hideNotCurrentPlayersTurn = (currentPlayerId) => {
     let id = null;
-    switch (nextPlayerId) {
+    switch (currentPlayerId) {
       case 1:
         id = 'player2Emoji';
         break;
@@ -197,5 +197,6 @@
     }
   };
 
+  $('[data-toggle="tooltip"]').tooltip();
   $(document).ready(window.setInterval(refreshPage, 1000));
 })();
