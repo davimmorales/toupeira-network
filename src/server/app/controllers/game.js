@@ -7,7 +7,7 @@ module.exports = (app) => {
       res.render('game');
     },
     start(req, res) {
-      const startGame = req.body.startGame === 'true';
+      const startGame = req.body.startGame == true;
       const query = GameRecord.find({});
       query.findOne().sort({_id: -1});
       query.select('inProgress');
