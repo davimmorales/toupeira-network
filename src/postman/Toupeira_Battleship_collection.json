@@ -1,0 +1,126 @@
+{
+	"info": {
+		"name": "Toupeira Battleship",
+		"_postman_id": "51135f23-4189-b52e-527b-487d2ac37a7a",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET CURRENT PLAYER",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{url}}/game/currentPlayer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"game",
+						"currentPlayer"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET PROGRESS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{url}}/game/progress",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"game",
+						"progress"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET STATUS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{url}}/game/status",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"game",
+						"status"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST PLAY",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"player\": {{playerId}},\n\t\"square\": 1\n}"
+				},
+				"url": {
+					"raw": "{{url}}/game/play",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"game",
+						"play"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST START GAME",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"startGame\": true\n}"
+				},
+				"url": {
+					"raw": "{{url}}/game/start",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"game",
+						"start"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

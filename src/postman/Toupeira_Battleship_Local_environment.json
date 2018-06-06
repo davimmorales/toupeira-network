@@ -1,0 +1,22 @@
+{
+  "id": "c7647f22-80b6-aac7-fb1c-82acb924f516",
+  "name": "LOCAL",
+  "values": [
+    {
+      "enabled": true,
+      "key": "url",
+      "value": "localhost:3000",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "playerId",
+      "value": "2",
+      "type": "text"
+    }
+  ],
+  "timestamp": 1528316171714,
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2018-06-06T20:18:54.989Z",
+  "_postman_exported_using": "Postman/5.5.2"
+}
