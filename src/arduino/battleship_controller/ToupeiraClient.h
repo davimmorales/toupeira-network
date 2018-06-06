@@ -5,7 +5,7 @@
 
 class ToupeiraClient {
   public:
-    ToupeiraClient(const char * ip, int port);
+    ToupeiraClient(const char * ip, int port, bool verbose);
     int getCurrentPlayer(const char * endpoint);
     void postPlay(const char * endpoint, int player, int square);
 
@@ -14,6 +14,7 @@ class ToupeiraClient {
     String createPlayJSON(int player, int square);
     const char * _ip;
     int _port;
+    bool _verbose;
 };
 
 #endif

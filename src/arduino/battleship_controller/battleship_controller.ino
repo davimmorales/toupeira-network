@@ -12,7 +12,10 @@ IPAddress ip(192, 168, 122, 110);
 // Server's IP and PORT
 const char * serverIp = "toupeira-network.herokuapp.com";
 int serverPort = 80;
-ToupeiraClient toupeiraClient(serverIp, serverPort);
+
+// Toupeira Client
+bool verboseMode = false;
+ToupeiraClient toupeiraClient(serverIp, serverPort, verboseMode);
 
 // Endpoints
 const char * GET_CURRENT_PLAYER_ENDPOINT = "/game/currentPlayer";
@@ -22,8 +25,9 @@ const char * POST_PLAY_ENDPOINT = "/game/play";
 const int ANALOG_TO_DIGITAL_THRESHOLD = 1000;
 const int IO_PINS_AMOUNT = 8;
 const int input[] = {
-  A0, A1, A2, A3, A4, A5, A8, A9
+  A8, A9, A10, A11, A12, A13, A14, A15
 };
+const int waitingValueFromFPGAOutputLED = 10;
 const int PLAYER_ID = 1;
 
 // Variables
@@ -42,6 +46,7 @@ void setup() {
   for (int i = 0; i < IO_PINS_AMOUNT; i++) {
     pinMode(input[i], INPUT);
   }
+  pinMode(waitingValueFromFPGAOutputLED, OUTPUT);
 
   analogReference(INTERNAL1V1);
 
@@ -60,12 +65,14 @@ void loop() {
   switch (STATE){
     case WAITING_TURN:
       printMessage("Waiting Turn...");
+      digitalWrite(waitingValueFromFPGAOutputLED, LOW);
       if (toupeiraClient.getCurrentPlayer(GET_CURRENT_PLAYER_ENDPOINT) == PLAYER_ID) {
         STATE = WAITING_VALUE_FROM_FPGA;
       }
       break;
     case WAITING_VALUE_FROM_FPGA:
       printMessage("Waiting Value From FPGA...");
+      digitalWrite(waitingValueFromFPGAOutputLED, HIGH);
       currentValue = binaryToDecimalFromFPGA();
       if (currentValue != 0 && currentValue != previousValue) {
         previousValue = currentValue;
@@ -74,10 +81,12 @@ void loop() {
       break;
     case SENDING_VALUE_TO_SERVER:
       printMessage("Sending Value To Server...");
+      digitalWrite(waitingValueFromFPGAOutputLED, LOW);
       toupeiraClient.postPlay(POST_PLAY_ENDPOINT, PLAYER_ID, currentValue);
       STATE = WAITING_TURN;
       break;
     default:
+      digitalWrite(waitingValueFromFPGAOutputLED, LOW);
       STATE = WAITING_TURN;
       break;
   }

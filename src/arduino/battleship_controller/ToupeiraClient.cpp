@@ -7,22 +7,23 @@ String CURRENT_PLAYER_KEY = "\"currentPlayerId\"";
 String PLAYER_KEY = "\"player\"";
 String SQUARE_KEY = "\"square\"";
 
-ToupeiraClient::ToupeiraClient(const char * ip, int port) {
+ToupeiraClient::ToupeiraClient(const char * ip, int port, bool verbose) {
   _ip = ip;
   _port = port;
+  _verbose = verbose;
 }
 
 int ToupeiraClient::getCurrentPlayer(const char * endpoint) {
   String getResponse;
   
   if (_client.connect(_ip, _port)) {
-    Serial.println("\nConnected (GET)");
+    if (_verbose) Serial.println("\nConnected (GET)");
     _client.println("GET " + String(endpoint) + " HTTP/1.1");
     _client.println("Host: " + String(_ip) + ":" + String(_port));
     _client.println("Connection: close");
     _client.println();
   } else {
-    Serial.println("Connection Failed");
+    if (_verbose) Serial.println("Connection Failed");
   }
 
   while (_client.connected() && !_client.available()) {
@@ -32,12 +33,12 @@ int ToupeiraClient::getCurrentPlayer(const char * endpoint) {
   while (_client.available()) {
       if (_client.available()) {
           char c = _client.read();
-          Serial.print(c);
+          if (_verbose) Serial.print(c);
           getResponse += String(c);
       }
       if (!_client.connected()) {
-          Serial.println();
-          Serial.println("Disconnected (GET)");
+          if (_verbose) Serial.println();
+          if (_verbose) Serial.println("Disconnected (GET)");
           _client.stop();
       }
   }
@@ -48,9 +49,9 @@ int ToupeiraClient::getCurrentPlayer(const char * endpoint) {
 void ToupeiraClient::postPlay(const char * endpoint, int player, int square) {
   String json = createPlayJSON(player, square);
   if (_client.connect(_ip, _port)) {
-    Serial.println("\nConnected (POST)");
+    if (_verbose) Serial.println("\nConnected (POST)");
     _client.println();
-    Serial.println(json);
+    if (_verbose) Serial.println(json);
     _client.println("POST " + String(endpoint) + " HTTP/1.1");
     _client.println("Host: " + String(_ip) + ":" + String(_port));
     _client.println("Content-Type: application/json; charset=utf-8");
@@ -64,7 +65,7 @@ void ToupeiraClient::postPlay(const char * endpoint, int player, int square) {
 
   if (_client.connected()) {
     _client.stop();
-    Serial.println("Disconnected (POST)");
+    if (_verbose) Serial.println("Disconnected (POST)");
   }
 }
 
