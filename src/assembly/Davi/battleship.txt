@@ -1,0 +1,6 @@
+int idx; //2
+int values[64]; //360~424
+int square; //3
+int row; //4
+int column; //5
+int state; //6
