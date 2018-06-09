@@ -7,7 +7,7 @@ module.exports = (app) => {
       res.render('game');
     },
     start(req, res) {
-      const startGame = req.body.startGame == true;
+      const startGame = Boolean(req.body.startGame) === true;
       const query = GameRecord.find({});
       query.findOne().sort({_id: -1});
       query.select('inProgress');
@@ -35,6 +35,29 @@ module.exports = (app) => {
           res.status(200).json({message: 'Game has not started!'});
         }
       });
+    },
+    restart(req, res) {
+      const restartGame = Boolean(req.body.restartGame) === true;
+      if (restartGame === true) {
+        GameRecord.deleteMany({}, (err) => {
+          if (err) {
+            res.status(500).send(err);
+          } else {
+            let gameRecord = new GameRecord();
+            gameRecord.player1.board = utils.createBoard();
+            gameRecord.player2.board = utils.createBoard();
+            gameRecord.save((err) => {
+              if (err) {
+                res.status(500).send(err);
+              } else {
+                res.status(201).json({message: 'Game restarted!'});
+              }
+            });
+          }
+        });
+      } else {
+        res.status(200).json({message: 'Game has not restarted!'});
+      }
     },
     play(req, res) {
       const playerId = Number(req.body.player);

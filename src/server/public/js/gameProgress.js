@@ -95,7 +95,9 @@
   const updateSquare = (squareElement, symbolString, showLivingShips) => {
     let classList = squareElement.classList;
     let symbol = Symbol.for(symbolString);
-    removeClass(classList, DEFAULT_SQUARE.CLASS);
+    let squareClasses =
+      Object.values(SQUARE_STATUS).map((element) => element.CLASS);
+    removeAllSquareClasses(classList, squareClasses);
     addClass(classList, getClassBySymbol(symbol, showLivingShips));
   };
 
@@ -183,6 +185,12 @@
     addClass(classList, TROPHY.CLASS);
     removeClass(classList, TURN.CLASS);
     removeClass(classList, NO_SHOW_CLASS);
+  };
+
+  const removeAllSquareClasses = (classList, squareClasses) => {
+    for (let index = 0; index < squareClasses.length; ++index) {
+      removeClass(classList, squareClasses[index]);
+    }
   };
 
   const addClass = (classList, className) => {

@@ -16,6 +16,23 @@
     });
   };
 
+  const restartGame = (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+
+    $.ajax({
+      url: '/game/restart',
+      type: 'POST',
+      data: {restartGame: true},
+      success: () => {
+        enableSelectPlayerArea(true);
+      },
+      error: () => {
+        console.log('Restart game failed');
+      },
+    });
+  };
+
   const refreshPage = () => {
     $.ajax({
       url: '/game/status',
@@ -41,5 +58,6 @@
   };
 
   $(document).ready($('#startGameButton').click(startGame));
+  $(document).ready($('#restartGameButton').click(restartGame));
   $(document).ready(window.setInterval(refreshPage, 1000));
 })();
