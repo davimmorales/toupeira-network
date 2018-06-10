@@ -4,3 +4,4 @@ int square; //3
 int row; //4
 int column; //5
 int state; //6
+9 R[9]
