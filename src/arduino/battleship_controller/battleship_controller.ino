@@ -27,7 +27,7 @@ const int IO_PINS_AMOUNT = 8;
 const int input[] = {
   A8, A9, A10, A11, A12, A13, A14, A15
 };
-const int waitingValueFromFPGAOutputLED = 10;
+const int waitingValueFromFPGAOutputLED = 13;
 const int PLAYER_ID = 1;
 
 // Variables
